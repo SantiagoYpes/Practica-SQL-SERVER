@@ -7,7 +7,6 @@ const path = require("path")
 app.get('/select', (req, res) => {
     controlador.select().then(respuesta_controlador => {
         let sillas = []
-        console.log(respuesta_controlador)
         respuesta_controlador.forEach(function (silla) {
             if (silla.estado == "Comprada") {
                 sillas.push(silla)
