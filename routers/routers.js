@@ -7,12 +7,14 @@ const path = require("path")
 app.get('/select', (req, res) => {
     controlador.select().then(respuesta_controlador => {
         let sillas = []
+        console.log(respuesta_controlador)
         respuesta_controlador.forEach(function (silla) {
             if (silla.estado == "Comprada") {
                 sillas.push(silla)
             }
         });
-        res.send(JSON.stringify(sillas))
+        let sillasJson = JSON.stringify(sillas)
+        res.send(sillasJson)
     }).catch(error => {
         console.log("error", error);
         res.send(error)
@@ -25,17 +27,17 @@ app.delete('/delete', (req, res) => {
     controlador.selectbuy(id_compra).then(respuesta_controlador => {
         respuesta_controlador.forEach(function (respuesta) {
             controlador.Delete_ticket(id_compra, respuesta.id_silla).then(respuesta_controlador => {
-                res.send(respuesta_controlador)
+                //res.send(respuesta_controlador)
             }).catch(error => {
                 console.log("error", error);
-                res.send(error)
+                //res.send(error)
             })
         })
         controlador.Delete_buy(id_compra).then(respuesta_controlador => {
-            res.send(respuesta_controlador)
+            //res.send(respuesta_controlador)
         }).catch(error => {
             console.log("error", error);
-            res.send(error)
+            //res.send(error)
         })
         res.send(respuesta_controlador)
     }).catch(error => {
@@ -56,10 +58,8 @@ app.post('/insertinto', (req, res) => {
     let responseJson = JSON.stringify(response)
 
     controlador.Add_buy(id_compra, id_user, name, quantity).then(respuesta_controlador => {
-        res.send(responseJson)
     }).catch(error => {
         console.log("error", error);
-        res.send(error)
     })
     for (let i = 0; i < quantity; i++) {
         let id_tiquete = ("TI" + random())
